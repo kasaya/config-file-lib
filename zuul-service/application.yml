@@ -6,7 +6,7 @@ zuul:
     # 登录主工程
     main-api:
       path: /main/**
-      serviceId: main-api
+      serviceId: main-service
   ratelimit:
     enabled: true
     behind-proxy: true  #代理之后
@@ -28,12 +28,12 @@ management:
       exposure:
         include: ["refresh", "env"]
 #mq 配置
-spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+ #   password: guest
 ---
 spring:
   profiles: dev
