@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
+    url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: Cango24@
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -17,17 +17,17 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
-  security:
-    user:
-      name: kasaya
-      password: kasaya
+#  security:
+#    user:
+#      name: kasaya
+#      password: kasaya
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.oycl.model
+  type-aliases-package: com.oycl.mainservice.model
   global-config:
     db-column-underline: true
     capital-mode: false
-    meta-object-handler: com.oycl.common.config.MetaObjectHandlerConfig
+    meta-object-handler: com.oycl.mainservice.common.config.MetaObjectHandlerConfig
   configuration:
     map-underscore-to-camel-case: true
 
@@ -71,15 +71,7 @@ hystrix:
 ---
 spring:
   profiles: dev
-db:
-  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
-  username: root
-  password: Cango24@
 ---
 spring:
   profiles: local
-db:
-  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
-  username: root
-  password: Cango24@
 
