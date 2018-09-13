@@ -4,14 +4,14 @@ zuul:
   prefix: /kasaya
   routes:
     # 登录主工程
-    main-api:
+    main-service:
       path: /main/**
       serviceId: main-service
   ratelimit:
     enabled: true
     behind-proxy: true  #代理之后
     default-policy: #可选 - 针对所有的路由配置的策略，除非特别配置了policies
-      limit:  10 #每个刷新时间窗口对应的请求数量限制
+      limit:  5 #每个刷新时间窗口对应的请求数量限制
       refresh-interval: 1 #刷新时间窗口的时间，默认值 (秒)
       type:
         - ORIGIN
@@ -22,21 +22,24 @@ ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
 
+spring:
+  rabbitmq:
+      host: localhost
+      port: 5672
+      username: springcloud
+      password: springcloud
+
 management:
   endpoints:
     web:
       exposure:
-        include: ["refresh", "env"]
-#mq 配置
-#spring:
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
- #   password: guest
+        include: '*'
+
 ---
 spring:
   profiles: dev
+
 ---
 spring:
   profiles: local
+

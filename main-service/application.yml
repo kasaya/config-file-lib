@@ -1,6 +1,5 @@
 server:
-  servlet:
-    context-path: /ser
+  port: 8091
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,6 +20,11 @@ spring:
     user:
       name: kasaya
       password: kasaya
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: springcloud
+    password: springcloud
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.oycl.model
@@ -31,6 +35,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
 
+user:
+  mate: bbbbb
 # 打开feign对hystrix的支持
 feign:
   hystrix:
@@ -48,7 +54,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: 'bus-refresh'
 hystrix:
   threadpool:
     default:
@@ -82,4 +88,5 @@ db:
   url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
   username: root
   password: Cango24@
+
 
