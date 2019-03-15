@@ -1,12 +1,11 @@
 server:
-  servlet:
-    context-path: /ser
+  port: 8091
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${dbhost}/test?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
-    username: ${dbuser}
-    password: ${dbpw}
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -21,12 +20,18 @@ spring:
     user:
       name: kasaya
       password: kasaya
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: springcloud
+    password: springcloud
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.oycl.orm.model
+  type-aliases-package: com.oycl.model
   global-config:
     db-column-underline: true
     capital-mode: false
+    meta-object-handler: com.oycl.common.config.MetaObjectHandlerConfig
   configuration:
     map-underscore-to-camel-case: true
 
@@ -34,38 +39,39 @@ mybatis-plus:
 feign:
   hystrix:
     enabled: true
-  client:
-    config:
-      default:
-        connectTimeout: 5000
-        readTimeout: 5000
-        loggerLevel: FULL
 
 #配置ribbon time-out
 ribbon:
-  MaxAutoRetriesNextServer: 1
-  MaxAutoRetries: 0
-  ConnectTimeout: 10000 #10秒
-  ReadTimeout: 10000 #10秒
+   MaxAutoRetriesNextServer: 1
+   MaxAutoRetries: 0
+   ConnectTimeout: 10000 #10秒
+   ReadTimeout: 10000 #10秒
 
+#配置springbus刷新点
 management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: 'bus-refresh'
 
-# 参数可以参加 HystrixCommandProperties 这个文件
+#mq 持续时间
+mq:
+  client:
+    duration: 10000
+
+
 hystrix:
   threadpool:
     default:
       coreSize: 10  #线程池核心线程数
   command:
-    MainApi#login(LoginInput): #设置某一个接口 default: 设置全部接口
+    #IService#hello(): 设置某一个接口 default: 设置全部接口
+    default:
       execution:
         isolation:
           strategy: SEMAPHORE #隔离策略，默认是Thread, 可选Thread｜Semaphore
-          thread:
-            timeoutInMilliseconds: 5200 #命令执行超时时间 超时时间
+          semaphore:
+            timeoutInMilliseconds: 1000 #命令执行超时时间 超时时间
             interruptOnTimeout: true #发生超时是是否中断，默认true
         timeout:
           enabled: true #执行是否启用超时，默认启用true
@@ -73,15 +79,21 @@ hystrix:
         requestVolumeThreshold: 3  #当在配置时间窗口内达到此数量后，进行短路。默认20个
         sleepWindowInMilliseconds: 5000  #短路多久以后开始尝试是否恢复，默认5毫秒
         errorThresholdPercentage: 50%  #出错百分比阈值，当达到此阈值后，开始短路。默认50%
+
+
 ---
 spring:
   profiles: dev
-dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
-dbuser: root
-dbpw: jHnXk31UXZasddf
+db:
+  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+  username: root
+  password: Cango24@
 ---
 spring:
   profiles: local
-dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
-dbuser: root
-dbpw: jHnXk31UXZasddf
+db:
+  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+  username: root
+  password: Cango24@
+
+

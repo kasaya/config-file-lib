@@ -21,6 +21,9 @@ zuul:
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
+  #开启okhttp3
+  okhttp:
+    enabled: true
 
 spring:
   rabbitmq:
@@ -33,7 +36,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: ['*']
+
 
 ---
 spring:

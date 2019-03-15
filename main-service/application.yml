@@ -1,11 +1,11 @@
 server:
-  port: 8091
+  port: 8090
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${db.url}
-    username: ${db.username}
-    password: ${db.password}
+    url: jdbc:mysql://${dbhost}/test?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+    username: ${dbuser}
+    password: ${dbpw}
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -27,11 +27,10 @@ spring:
     password: springcloud
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.oycl.model
+  type-aliases-package: com.oycl.orm.model
   global-config:
     db-column-underline: true
     capital-mode: false
-    meta-object-handler: com.oycl.common.config.MetaObjectHandlerConfig
   configuration:
     map-underscore-to-camel-case: true
 
@@ -43,12 +42,12 @@ feign:
     enabled: true
 
 #配置ribbon time-out
-interface-service:
-  ribbon:
-   MaxAutoRetriesNextServer: 1
-   MaxAutoRetries: 0
-   ConnectTimeout: 10000 #10秒
-   ReadTimeout: 10000 #10秒
+# interface-service: 在zuun 中这里配service-id
+ribbon:
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 0
+  ConnectTimeout: 10000 #10秒
+  ReadTimeout: 10000 #10秒
 
 management:
   endpoints:
@@ -59,13 +58,12 @@ hystrix:
   threadpool:
     default:
       coreSize: 10  #线程池核心线程数
-  command:
-    #IService#hello(): 设置某一个接口 default: 设置全部接口
+  command: 
     default:
       execution:
         isolation:
           strategy: SEMAPHORE #隔离策略，默认是Thread, 可选Thread｜Semaphore
-          semaphore:
+          thread:
             timeoutInMilliseconds: 1000 #命令执行超时时间 超时时间
             interruptOnTimeout: true #发生超时是是否中断，默认true
         timeout:
@@ -77,16 +75,14 @@ hystrix:
 ---
 spring:
   profiles: dev
-db:
-  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
-  username: root
-  password: Cango24@
+dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
+dbuser: root
+dbpw: jHnXk31UXZasddf
 ---
 spring:
   profiles: local
-db:
-  url: jdbc:mysql://192.168.121.151:3306/scf?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
-  username: root
-  password: Cango24@
+dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
+dbuser: root
+dbpw: jHnXk31UXZasddf
 
 
