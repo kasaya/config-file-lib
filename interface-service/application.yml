@@ -21,14 +21,6 @@ spring:
     user:
       name: kasaya
       password: kasaya
-mybatis-plus:
-  mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.oycl.orm.model
-  global-config:
-    db-column-underline: true
-    capital-mode: false
-  configuration:
-    map-underscore-to-camel-case: true
 
 # 打开feign对hystrix的支持
 feign:
