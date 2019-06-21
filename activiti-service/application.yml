@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${dbhost}/test?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://${dbhost}/activity?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
     username: ${dbuser}
     password: ${dbpw}
     type: com.zaxxer.hikari.HikariDataSource

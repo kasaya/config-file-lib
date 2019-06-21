@@ -25,6 +25,9 @@ spring:
     port: 5672
     username: springcloud
     password: springcloud
+  customize: 
+    globalsecurity: 
+      enabled: true
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.oycl.orm.model
@@ -35,7 +38,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
 
 user:
-  mate: bbbbb
+  mate: zzzzz
 # 打开feign对hystrix的支持
 feign:
   hystrix:
@@ -53,7 +56,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: 'bus-refresh'
+        include: ['bus-refresh','refresh-gateway']
+    enabled-by-default: true
 hystrix:
   threadpool:
     default:
