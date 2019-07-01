@@ -45,9 +45,12 @@ ribbon:
   ReadTimeout: 10000 #10秒
   okhttp:
     enabled: true
-stores: # 这是不用eureka的配置方式，等用上云之后就用自己的eureka配置
+
+stores: # 用于配置没有注册在eurika上的服务
   ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
     listOfServers: 'localhost:8080'
+
 management:
   endpoints:
     web:
