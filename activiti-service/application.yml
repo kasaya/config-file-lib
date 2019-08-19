@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${dbhost}/activity?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://${dbhost}/flowable?serverTimezone=Asia/Shanghai&autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8
     username: ${dbuser}
     password: ${dbpw}
     type: com.zaxxer.hikari.HikariDataSource
@@ -21,10 +21,16 @@ spring:
     user:
       name: kasaya
       password: kasaya
-  activiti:
-    db-history-used: true
-    database-schema: activity
-    history-level: full
+flowable:
+  db-history-used: true
+  database-schema: flowable
+  history-level: audit
+  async-executor-activate: false
+  database-schema-update: true
+  check-process-definitions: false
+  activity-font-name: simsun
+  label-font-name: simsun
+  annotation-font-name: simsun
 
 # 打开feign对hystrix的支持
 feign:
@@ -79,12 +85,12 @@ hystrix:
 ---
 spring:
   profiles: dev
-dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
-dbuser: root
-dbpw: jHnXk31UXZasddf
+dbhost: 10.42.0.171:3306
+dbuser: houtai
+dbpw: 1DKddf%#if7
 ---
 spring:
   profiles: local
-dbhost: sh-cdb-fhama989.sql.tencentcdb.com:63156
-dbuser: root
-dbpw: jHnXk31UXZasddf
+dbhost: 10.42.0.171:3306
+dbuser: houtai
+dbpw: 1DKddf%#if7
